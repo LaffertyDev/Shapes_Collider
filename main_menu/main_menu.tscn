@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://main_menu/main_menu.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="VBoxContainer" parent="."]
+anchor_bottom = 1.0
+
+[node name="New Game" type="Button" parent="ItemList"]
+margin_right = 82.0
+margin_bottom = 20.0
+text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Button" parent="ItemList"]
+margin_top = 24.0
+margin_right = 82.0
+margin_bottom = 44.0
+text = "Continue"
+
+[node name="Options" type="Button" parent="ItemList"]
+margin_top = 48.0
+margin_right = 82.0
+margin_bottom = 68.0
+text = "Options"
+
+[node name="Exit" type="Button" parent="ItemList"]
+margin_top = 72.0
+margin_right = 82.0
+margin_bottom = 92.0
+text = "Exit"
+[connection signal="pressed" from="ItemList/New Game" to="." method="_on_New_Game_pressed"]
+[connection signal="pressed" from="ItemList/Exit" to="." method="_on_Exit_pressed"]
