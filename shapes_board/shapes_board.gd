@@ -18,6 +18,9 @@ func _input(event):
 		
 	if event.is_action_pressed("ui_down"):
 		attempt_move_down(current_shape)
+		
+	if event.is_action_pressed("ui_rotate"):
+		current_shape.rotate_clockwise()
 
 func _on_ShapeTimer_timeout():
 	if current_shape.Board_Y == GridDepth - 1:
@@ -27,7 +30,8 @@ func _on_ShapeTimer_timeout():
 		attempt_move_down(current_shape)
 	
 func spawn_shape():
-	var shape = load("res://shapes_board/Shape_I.tscn").instance()
+	var shape = load("res://shapes_board/Shape.tscn").instance()
+	shape.ShapeOption = Enums.ShapeOptions.T
 	shape.Board_X = (GridWidth / 2)
 	shape.Board_Y = 0
 	shape.set_position_to_grid()
