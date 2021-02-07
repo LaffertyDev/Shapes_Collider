@@ -35,52 +35,85 @@ func _ready():
 
 	update_position()
 
-func rotate_clockwise():
-	var size = shape_local_grid.size()
+func can_rotate_clockwise(global_grid):
+	var rotated_local_grid = get_rotate_clockwise()
+	var rotated_global_coords = _get_global_grid_positions(rotated_local_grid)
+	for rotated_block in rotated_global_coords:
+		if rotated_block.x < 0 || rotated_block.x >= global_grid.size():
+			return false
+		
+		if rotated_block.y < 0 || rotated_block.y >= global_grid[0].size():
+			return false
+	
+		if (global_grid[rotated_block.x][rotated_block.y] == true):
+			return false
+	
+	return true
+
+func get_rotate_clockwise():
+	var grid_to_rotate = shape_local_grid.duplicate(true)
+	var size = grid_to_rotate.size()
 	var layers = size / 2
 	for layer in range(0, layers):
 		var first = layer
 		var last = size - first - 1
 		for element in range(first, last):
 			var offset = element - first
-			var top = shape_local_grid[first][element]
-			var right = shape_local_grid[element][last]
-			var bottom = shape_local_grid[last][last - offset]
-			var left = shape_local_grid[last - offset][first]
+			var top = grid_to_rotate[first][element]
+			var right = grid_to_rotate[element][last]
+			var bottom = grid_to_rotate[last][last - offset]
+			var left = grid_to_rotate[last - offset][first]
 			
-			shape_local_grid[first][element] = left
-			shape_local_grid[element][last] = top
-			shape_local_grid[last][last - offset] = right
-			shape_local_grid[last - offset][first] = bottom
+			grid_to_rotate[first][element] = left
+			grid_to_rotate[element][last] = top
+			grid_to_rotate[last][last - offset] = right
+			grid_to_rotate[last - offset][first] = bottom
+	return grid_to_rotate
+	
+func rotate_clockwise():
+	shape_local_grid = get_rotate_clockwise()
 	update_position()
 
-
 func update_position():
-	var block_indices = []
-	block_indices.resize(4)
-	var block_index = 0
-	for x in range(0, shape_local_grid.size()):
-		for y in range(0, shape_local_grid.size()):
-			if shape_local_grid[x][y]:
-				block_indices[block_index] = Vector2(y, x)
-				block_index += 1
+	var block_indices = get_local_grid_positions(shape_local_grid)
 	
 	$Sprite1.set_position(block_indices[0] * 30)
 	$Sprite2.set_position(block_indices[1] * 30)
 	$Sprite3.set_position(block_indices[2] * 30)
 	$Sprite4.set_position(block_indices[3] * 30)
+	
+func get_global_grid_positions():
+	return _get_global_grid_positions(shape_local_grid)
+
+func _get_global_grid_positions(local_grid_matrix):
+	var global_indices = []
+	var local_indices = get_local_grid_positions(local_grid_matrix)
+	for block in local_indices:
+		global_indices.append(Vector2(block.x + self.Board_X, block.y + self.Board_Y))
+	return global_indices
+
+func get_local_grid_positions(local_grid_matrix):
+	var block_indices = []
+	block_indices.resize(4)
+	var block_index = 0
+	for x in range(0, local_grid_matrix.size()):
+		for y in range(0, local_grid_matrix.size()):
+			if local_grid_matrix[x][y]:
+				block_indices[block_index] = Vector2(y, x)
+				block_index += 1
+	return block_indices
 
 func set_position_to_grid():
 	set_position(Vector2(Board_X * 30, Board_Y * 30))
 
 func deactivate():
-	var res = load("res://shapes_board/Shape_Block.tscn")
-	for n in range(0, 4):
-		var block = res.instance()
-		block.Board_X = self.Board_X
-		block.Board_Y = self.Board_Y + n
-		block.texture.region = $Sprite.texture.region
-		get_parent().add_child(block)
-		block.set_position_to_grid()
-	hide()
+	var blocks_global = _get_global_grid_positions(shape_local_grid)
+	for block in blocks_global:
+		get_node("../..").shapes_grid[block.x][block.y] = true
+		var child = get_children()[0]
+		remove_child(child)
+		get_parent().add_child(child)
+		child.set_position(Vector2(block.x * 30, block.y * 30))
+	
 	queue_free()
+	hide()
