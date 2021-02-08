@@ -33,10 +33,27 @@ func _input(event):
 func _on_ShapeTimer_timeout():
 	if !can_move_down(current_shape):
 		current_shape.deactivate()
+		clear_row()
 		spawn_shape()
 	else:
 		attempt_move_down(current_shape)
 	
+func clear_row():
+	for y in range(GridDepth):
+		var row_needs_cleared = true
+		for x in range(GridWidth):
+			row_needs_cleared = row_needs_cleared && shapes_grid[x][y]
+		
+		if row_needs_cleared:
+			for y_clear in range(y, 0, -1):
+				for x in range(0, GridWidth):
+					# move all lines down by one above this row
+					shapes_grid[x][y_clear] = shapes_grid[x][y_clear - 1] 
+			
+			for x in range (0, GridWidth):
+				# clear top row
+				shapes_grid[x][0] = false
+
 func spawn_shape():
 	var shape = load("res://shapes_board/Shape.tscn").instance()
 	shape.ShapeOption = Enums.ShapeOptions.L
@@ -64,6 +81,7 @@ func attempt_move_down(shape):
 	if can_move_down(shape):
 		shape.Board_Y += 1
 		shape.set_position_to_grid()
+		$ShapeTimer.start() # reset timer
 	else:
 		print("At bottom")
 
