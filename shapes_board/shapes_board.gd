@@ -7,6 +7,8 @@ export(int) var GridDepth = 22 # Y, bottom right = (9, 21)
 var current_shape;
 
 var shapes_grid;
+# dict
+	# $Sprite (nullable)
 
 func _ready():
 	spawn_shape()
@@ -37,22 +39,25 @@ func _on_ShapeTimer_timeout():
 		spawn_shape()
 	else:
 		attempt_move_down(current_shape)
-	
+
 func clear_row():
 	for y in range(GridDepth):
 		var row_needs_cleared = true
 		for x in range(GridWidth):
-			row_needs_cleared = row_needs_cleared && shapes_grid[x][y]
-		
+			row_needs_cleared = row_needs_cleared && (shapes_grid[x][y] != null)
+
 		if row_needs_cleared:
+			for x in range(0, GridWidth):
+				# clear the row that needs cleared, deleting sprites
+				shapes_grid[x][y].hide()
+				shapes_grid[x][y].queue_free()
 			for y_clear in range(y, 0, -1):
 				for x in range(0, GridWidth):
-					# move all lines down by one above this row
+					# move all lines down by one that are above this row
 					shapes_grid[x][y_clear] = shapes_grid[x][y_clear - 1] 
-			
-			for x in range (0, GridWidth):
-				# clear top row
-				shapes_grid[x][0] = false
+					shapes_grid[x][y_clear - 1] = null 
+					if (shapes_grid[x][y_clear] != null):
+						shapes_grid[x][y_clear].set_position(Vector2(x * 30, y_clear * 30))
 
 func spawn_shape():
 	var shape = load("res://shapes_board/Shape.tscn").instance()
@@ -91,18 +96,18 @@ func can_move_left(shape):
 		if !(block.x > 0):
 			return false
 		
-		if (shapes_grid[block.x - 1][block.y] == true):
+		if (shapes_grid[block.x - 1][block.y] != null):
 			return false
 
 	return true
-	
+
 func can_move_right(shape):
 	var current_grid = shape.get_global_grid_positions()
 	for block in current_grid:
 		if !(block.x < GridWidth - 1):
 			return false
 		
-		if (shapes_grid[block.x + 1][block.y] == true):
+		if (shapes_grid[block.x + 1][block.y] != null):
 			return false
 
 	return true
@@ -113,7 +118,7 @@ func can_move_down(shape):
 		if !(block.y < GridDepth - 1):
 			return false
 		
-		if (shapes_grid[block.x][block.y + 1] == true):
+		if (shapes_grid[block.x][block.y + 1] != null):
 			return false
 
 	return true

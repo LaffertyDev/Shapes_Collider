@@ -45,7 +45,7 @@ func can_rotate_clockwise(global_grid):
 		if rotated_block.y < 0 || rotated_block.y >= global_grid[0].size():
 			return false
 	
-		if (global_grid[rotated_block.x][rotated_block.y] == true):
+		if (global_grid[rotated_block.x][rotated_block.y] != null):
 			return false
 	
 	return true
@@ -109,10 +109,10 @@ func set_position_to_grid():
 func deactivate():
 	var blocks_global = _get_global_grid_positions(shape_local_grid)
 	for block in blocks_global:
-		get_node("../..").shapes_grid[block.x][block.y] = true
 		var child = get_children()[0]
 		remove_child(child)
 		get_parent().add_child(child)
+		get_node("../..").shapes_grid[block.x][block.y] = child
 		child.set_position(Vector2(block.x * 30, block.y * 30))
 	
 	queue_free()
