@@ -3,7 +3,7 @@ extends Node2D
 # tetris generally has a 10x22 grid size
 export(int) var GridWidth = 10 # X
 export(int) var GridDepth = 22 # Y, bottom right = (9, 21)
-var rng = RandomNumberGenerator.new()
+var rng
 var current_shape;
 
 var shapes_grid;
@@ -11,6 +11,8 @@ var shapes_grid;
 	# $Sprite (nullable)
 
 func _ready():
+	rng = RandomNumberGenerator.new()
+	rng.randomize() # seed rng with system time
 	spawn_shape()
 	shapes_grid = []
 	shapes_grid.resize(GridWidth)
@@ -61,7 +63,7 @@ func clear_row():
 
 func spawn_shape():
 	var shape = load("res://shapes_board/Shape.tscn").instance()
-	shape.ShapeOption = rng.randi_range(0, Enums.ShapeOptions.size())
+	shape.ShapeOption = rng.randi_range(0, Enums.ShapeOptions.size() - 1)
 	shape.Board_X = (GridWidth / 2)
 	shape.Board_Y = 0
 	shape.set_position_to_grid()

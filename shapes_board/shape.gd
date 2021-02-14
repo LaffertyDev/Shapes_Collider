@@ -33,6 +33,10 @@ func _ready():
 		Enums.ShapeOptions.Z:
 			shape_local_grid = shape_z.duplicate(true)
 
+	$Sprite1.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
+	$Sprite2.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
+	$Sprite3.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
+	$Sprite4.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
 	update_position()
 
 func can_rotate_clockwise(global_grid):
