@@ -78,13 +78,15 @@ func rotate_clockwise():
 	shape_local_grid = get_rotate_clockwise()
 	update_position()
 
+# update the blocks (after a rotation) so they are in the right places visually
 func update_position():
 	var block_indices = get_local_grid_positions(shape_local_grid)
-	
-	$Sprite1.set_position(block_indices[0] * 30)
-	$Sprite2.set_position(block_indices[1] * 30)
-	$Sprite3.set_position(block_indices[2] * 30)
-	$Sprite4.set_position(block_indices[3] * 30)
+
+	# this doesn't need to be offset because its local to this parent
+	$Sprite1.set_position(Vector2(block_indices[0].x * 31, block_indices[0].y * 31))
+	$Sprite2.set_position(Vector2(block_indices[1].x * 31, block_indices[1].y * 31))
+	$Sprite3.set_position(Vector2(block_indices[2].x * 31, block_indices[2].y * 31))
+	$Sprite4.set_position(Vector2(block_indices[3].x * 31, block_indices[3].y * 31))
 	
 func get_global_grid_positions():
 	return _get_global_grid_positions(shape_local_grid)
@@ -100,15 +102,17 @@ func get_local_grid_positions(local_grid_matrix):
 	var block_indices = []
 	block_indices.resize(4)
 	var block_index = 0
-	for x in range(0, local_grid_matrix.size()):
-		for y in range(0, local_grid_matrix.size()):
-			if local_grid_matrix[x][y]:
-				block_indices[block_index] = Vector2(y, x)
+	for y in range(0, local_grid_matrix.size()): # how arrays work, first size is the Y
+		for x in range(0, local_grid_matrix.size()):
+			if local_grid_matrix[y][x]:
+				block_indices[block_index] = Vector2(x, y)
 				block_index += 1
 	return block_indices
 
+# Update the entire tetrimino's position relative to the parent
 func set_position_to_grid():
-	set_position(Vector2(Board_X * 30, Board_Y * 30))
+	# offset relative to grid (so left-most pixel is touching the grid)
+	set_position(Vector2((Board_X * 31) + 15, (Board_Y * 31) + 16))
 
 func deactivate():
 	var blocks_global = _get_global_grid_positions(shape_local_grid)
@@ -117,7 +121,7 @@ func deactivate():
 		remove_child(child)
 		get_parent().add_child(child)
 		get_node("../..").shapes_grid[block.x][block.y] = child
-		child.set_position(Vector2(block.x * 30, block.y * 30))
+		child.set_position(Vector2((block.x * 31) + 15, (block.y * 31) + 16)) # offset because now there is no local offsetting
 	
 	queue_free()
 	hide()

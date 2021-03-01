@@ -59,7 +59,7 @@ func clear_row():
 					shapes_grid[x][y_clear] = shapes_grid[x][y_clear - 1] 
 					shapes_grid[x][y_clear - 1] = null 
 					if (shapes_grid[x][y_clear] != null):
-						shapes_grid[x][y_clear].set_position(Vector2(x * 30, y_clear * 30))
+						shapes_grid[x][y_clear].set_position(Vector2((x * 31) + 15, (y_clear * 31) + 16))
 
 func spawn_shape():
 	var shape = load("res://shapes_board/Shape.tscn").instance()
