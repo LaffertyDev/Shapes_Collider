@@ -112,7 +112,7 @@ func get_local_grid_positions(local_grid_matrix):
 # Update the entire tetrimino's position relative to the parent
 func set_position_to_grid():
 	# offset relative to grid (so left-most pixel is touching the grid)
-	set_position(Vector2((Board_X * 31) + 15, (Board_Y * 31) + 16))
+	set_position(Vector2((Board_X * 31) + 15, (Board_Y * 31) + 15))
 
 func deactivate():
 	var blocks_global = _get_global_grid_positions(shape_local_grid)
@@ -121,7 +121,7 @@ func deactivate():
 		remove_child(child)
 		get_parent().add_child(child)
 		get_node("../..").shapes_grid[block.x][block.y] = child
-		child.set_position(Vector2((block.x * 31) + 15, (block.y * 31) + 16)) # offset because now there is no local offsetting
+		child.set_position(Vector2((block.x * 31) + 15, (block.y * 31) + 15)) # offset because now there is no local offsetting
 	
 	queue_free()
 	hide()
