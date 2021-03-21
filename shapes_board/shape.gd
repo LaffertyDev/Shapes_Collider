@@ -17,27 +17,29 @@ const shape_z = [[false, true, false], [true, true, true], [false, false, false]
 var shape_local_grid
 
 func _ready():
-	match ShapeOption:
-		Enums.ShapeOptions.I:
-			shape_local_grid = shape_i.duplicate(true)
-		Enums.ShapeOptions.J:
-			shape_local_grid = shape_j.duplicate(true)
-		Enums.ShapeOptions.L:
-			shape_local_grid = shape_l.duplicate(true)
-		Enums.ShapeOptions.O:
-			shape_local_grid = shape_o.duplicate(true)
-		Enums.ShapeOptions.S:
-			shape_local_grid = shape_s.duplicate(true)
-		Enums.ShapeOptions.T:
-			shape_local_grid = shape_t.duplicate(true)
-		Enums.ShapeOptions.Z:
-			shape_local_grid = shape_z.duplicate(true)
-
+	shape_local_grid = get_matrix_from_shape(ShapeOption);
 	$Sprite1.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
 	$Sprite2.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
 	$Sprite3.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
 	$Sprite4.texture.region = Rect2(ShapeOption * 30, 0, 30, 30)
 	update_position()
+
+func get_matrix_from_shape(shape_option):
+	match shape_option:
+		Enums.ShapeOptions.I:
+			return shape_i.duplicate(true)
+		Enums.ShapeOptions.J:
+			return shape_j.duplicate(true)
+		Enums.ShapeOptions.L:
+			return shape_l.duplicate(true)
+		Enums.ShapeOptions.O:
+			return shape_o.duplicate(true)
+		Enums.ShapeOptions.S:
+			return shape_s.duplicate(true)
+		Enums.ShapeOptions.T:
+			return shape_t.duplicate(true)
+		Enums.ShapeOptions.Z:
+			return shape_z.duplicate(true)
 
 func can_rotate_clockwise(global_grid):
 	var rotated_local_grid = get_rotate_clockwise()

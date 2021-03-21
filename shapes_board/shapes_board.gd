@@ -7,13 +7,11 @@ var rng
 var current_shape;
 
 var shapes_grid;
-# dict
-	# $Sprite (nullable)
 
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize() # seed rng with system time
-	spawn_shape()
+	spawn_shape(get_random_shape_option())
 	shapes_grid = []
 	shapes_grid.resize(GridWidth)
 	for x in GridWidth:
@@ -38,9 +36,16 @@ func _on_ShapeTimer_timeout():
 	if !can_move_down(current_shape):
 		current_shape.deactivate()
 		clear_row()
-		spawn_shape()
+		var potential_shape = get_random_shape_option()
+		if can_spawn_shape(potential_shape):
+			spawn_shape(get_random_shape_option())
+		else:
+			print("game over")
 	else:
 		attempt_move_down(current_shape)
+
+func get_random_shape_option():
+	return rng.randi_range(0, Enums.ShapeOptions.size() - 1)
 
 func clear_row():
 	for y in range(GridDepth):
@@ -61,9 +66,24 @@ func clear_row():
 					if (shapes_grid[x][y_clear] != null):
 						shapes_grid[x][y_clear].set_position(Vector2((x * 31) + 15, (y_clear * 31) + 15))
 
-func spawn_shape():
+func can_spawn_shape(option):
 	var shape = load("res://shapes_board/Shape.tscn").instance()
-	shape.ShapeOption = rng.randi_range(0, Enums.ShapeOptions.size() - 1)
+	shape.Board_X = (GridWidth / 2)
+	shape.Board_Y = 0
+	var potential_shape_local_grid = shape.get_matrix_from_shape(option)
+	var potential_shape_grid = shape._get_global_grid_positions(potential_shape_local_grid)
+	var can_spawn = true
+	for potential_block in potential_shape_grid:
+		if (shapes_grid[potential_block.x][potential_block.y] != null):
+			can_spawn = false
+			break
+
+	shape.free()
+	return can_spawn
+
+func spawn_shape(option):
+	var shape = load("res://shapes_board/Shape.tscn").instance()
+	shape.ShapeOption = option
 	shape.Board_X = (GridWidth / 2)
 	shape.Board_Y = 0
 	shape.set_position_to_grid()
