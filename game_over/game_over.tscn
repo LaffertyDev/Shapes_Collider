@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game_over/game_over.gd" type="Script" id=1]
+
+[node name="game_over" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoxContainer" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="BoxContainer"]
+margin_right = 83.0
+margin_bottom = 14.0
+text = "Game Over!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reset" type="Button" parent="BoxContainer"]
+margin_top = 18.0
+margin_right = 83.0
+margin_bottom = 38.0
+text = "Reset"
+
+[node name="Main Menu" type="Button" parent="BoxContainer"]
+margin_top = 42.0
+margin_right = 83.0
+margin_bottom = 62.0
+text = "Main Menu"
+[connection signal="pressed" from="BoxContainer/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="pressed" from="BoxContainer/Main Menu" to="." method="_on_Main_Menu_pressed"]

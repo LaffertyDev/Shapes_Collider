@@ -10,10 +10,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="VBoxContainer" parent="."]
+[node name="BoxContainer" type="VBoxContainer" parent="."]
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="New Game" type="Button" parent="ItemList"]
+[node name="New Game" type="Button" parent="BoxContainer"]
 margin_right = 82.0
 margin_bottom = 20.0
 text = "New Game"
@@ -21,22 +24,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Continue" type="Button" parent="ItemList"]
+[node name="Continue" type="Button" parent="BoxContainer"]
 margin_top = 24.0
 margin_right = 82.0
 margin_bottom = 44.0
 text = "Continue"
 
-[node name="Options" type="Button" parent="ItemList"]
+[node name="Options" type="Button" parent="BoxContainer"]
 margin_top = 48.0
 margin_right = 82.0
 margin_bottom = 68.0
 text = "Options"
 
-[node name="Exit" type="Button" parent="ItemList"]
+[node name="Exit" type="Button" parent="BoxContainer"]
 margin_top = 72.0
 margin_right = 82.0
 margin_bottom = 92.0
 text = "Exit"
-[connection signal="pressed" from="ItemList/New Game" to="." method="_on_New_Game_pressed"]
-[connection signal="pressed" from="ItemList/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="BoxContainer/New Game" to="." method="_on_New_Game_pressed"]
+[connection signal="pressed" from="BoxContainer/Exit" to="." method="_on_Exit_pressed"]
