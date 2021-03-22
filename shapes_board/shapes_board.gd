@@ -8,6 +8,10 @@ var current_shape;
 
 var shapes_grid;
 
+var score = 0
+
+signal score_points(score)
+
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize() # seed rng with system time
@@ -51,12 +55,14 @@ func get_random_shape_option():
 	return rng.randi_range(0, Enums.ShapeOptions.size() - 1)
 
 func clear_row():
+	var rows_cleared = 0
 	for y in range(GridDepth):
 		var row_needs_cleared = true
 		for x in range(GridWidth):
 			row_needs_cleared = row_needs_cleared && (shapes_grid[x][y] != null)
 
 		if row_needs_cleared:
+			rows_cleared += 1
 			for x in range(0, GridWidth):
 				# clear the row that needs cleared, deleting sprites
 				shapes_grid[x][y].hide()
@@ -68,6 +74,25 @@ func clear_row():
 					shapes_grid[x][y_clear - 1] = null 
 					if (shapes_grid[x][y_clear] != null):
 						shapes_grid[x][y_clear].set_position(Vector2((x * 31) + 15, (y_clear * 31) + 15))
+
+	register_score(rows_cleared)
+
+func register_score(rows_cleared):
+	if (rows_cleared == 0):
+		return
+	
+	# https://tetris.wiki/Scoring
+	match rows_cleared:
+		1:
+			score += 40
+		2:
+			score += 100
+		3:
+			score += 300
+		4:
+			score += 1200
+
+	emit_signal('score_points', score)
 
 func can_spawn_shape(option):
 	var shape = load("res://shapes_board/Shape.tscn").instance()

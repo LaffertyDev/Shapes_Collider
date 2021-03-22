@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://shapes_board/shapes_board.gd" type="Script" id=1]
 [ext_resource path="res://shapes_board/grid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://shapes_board/gui.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,4 +14,7 @@ autostart = true
 position = Vector2( 32, 32 )
 
 [node name="Background_Grid" parent="Grid" instance=ExtResource( 2 )]
+
+[node name="Control" parent="." instance=ExtResource( 3 )]
+[connection signal="score_points" from="." to="Control" method="_on_Score_Update"]
 [connection signal="timeout" from="ShapeTimer" to="." method="_on_ShapeTimer_timeout"]
