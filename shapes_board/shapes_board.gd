@@ -41,6 +41,8 @@ func _on_ShapeTimer_timeout():
 			spawn_shape(get_random_shape_option())
 		else:
 			var err = get_tree().change_scene("res://game_over/game_over.tscn")
+			if err != OK:
+				print("There was a failure changing the scene")
 
 	else:
 		attempt_move_down(current_shape)
