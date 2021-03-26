@@ -31,7 +31,7 @@ func _input(event):
 		
 	if event.is_action_pressed("ui_down"):
 		attempt_move_down(current_shape)
-		
+
 	if event.is_action_pressed("ui_rotate"):
 		if current_shape.can_rotate_clockwise(shapes_grid):
 			current_shape.rotate_clockwise()
@@ -39,7 +39,7 @@ func _input(event):
 func _on_ShapeTimer_timeout():
 	if !can_move_down(current_shape):
 		current_shape.deactivate()
-		clear_row()
+		attempt_clear_rows()
 		var potential_shape = get_random_shape_option()
 		if can_spawn_shape(potential_shape):
 			spawn_shape(get_random_shape_option())
@@ -54,7 +54,7 @@ func _on_ShapeTimer_timeout():
 func get_random_shape_option():
 	return rng.randi_range(0, Enums.ShapeOptions.size() - 1)
 
-func clear_row():
+func attempt_clear_rows():
 	var rows_cleared = 0
 	for y in range(GridDepth):
 		var row_needs_cleared = true
