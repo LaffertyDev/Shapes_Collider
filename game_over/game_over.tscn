@@ -10,28 +10,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BoxContainer" type="VBoxContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Label" type="Label" parent="BoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 470.0
+margin_right = 553.0
+margin_bottom = 1024.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+margin_top = 481.0
 margin_right = 83.0
-margin_bottom = 14.0
+margin_bottom = 495.0
 text = "Game Over!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Reset" type="Button" parent="BoxContainer"]
-margin_top = 18.0
+[node name="Reset" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_top = 499.0
 margin_right = 83.0
-margin_bottom = 38.0
+margin_bottom = 519.0
 text = "Reset"
 
-[node name="Main Menu" type="Button" parent="BoxContainer"]
-margin_top = 42.0
+[node name="Main Menu" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_top = 523.0
 margin_right = 83.0
-margin_bottom = 62.0
+margin_bottom = 543.0
 text = "Main Menu"
-[connection signal="pressed" from="BoxContainer/Reset" to="." method="_on_Reset_pressed"]
-[connection signal="pressed" from="BoxContainer/Main Menu" to="." method="_on_Main_Menu_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Main Menu" to="." method="_on_Main_Menu_pressed"]

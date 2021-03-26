@@ -10,36 +10,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
 anchor_bottom = 1.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="New Game" type="Button" parent="BoxContainer"]
+[node name="VerticalBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 471.0
+margin_right = 553.0
+margin_bottom = 1024.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="New Game" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
+margin_top = 466.0
 margin_right = 82.0
-margin_bottom = 20.0
+margin_bottom = 486.0
 text = "New Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Continue" type="Button" parent="BoxContainer"]
-margin_top = 24.0
+[node name="Continue" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
+margin_top = 490.0
 margin_right = 82.0
-margin_bottom = 44.0
+margin_bottom = 510.0
 text = "Continue"
 
-[node name="Options" type="Button" parent="BoxContainer"]
-margin_top = 48.0
+[node name="Options" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
+margin_top = 514.0
 margin_right = 82.0
-margin_bottom = 68.0
+margin_bottom = 534.0
 text = "Options"
 
-[node name="Exit" type="Button" parent="BoxContainer"]
-margin_top = 72.0
+[node name="Exit" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
+margin_top = 538.0
 margin_right = 82.0
-margin_bottom = 92.0
+margin_bottom = 558.0
 text = "Exit"
-[connection signal="pressed" from="BoxContainer/New Game" to="." method="_on_New_Game_pressed"]
-[connection signal="pressed" from="BoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="HBoxContainer/VerticalBoxContainer/New Game" to="." method="_on_New_Game_pressed"]
+[connection signal="pressed" from="HBoxContainer/VerticalBoxContainer/Exit" to="." method="_on_Exit_pressed"]
