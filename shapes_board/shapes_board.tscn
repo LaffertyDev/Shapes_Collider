@@ -11,10 +11,12 @@ script = ExtResource( 1 )
 autostart = true
 
 [node name="Grid" type="Node2D" parent="."]
-position = Vector2( 32, 32 )
+position = Vector2( 80, 16 )
 
 [node name="Background_Grid" parent="Grid" instance=ExtResource( 2 )]
 
 [node name="Control" parent="." instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 [connection signal="score_points" from="." to="Control" method="_on_Score_Update"]
 [connection signal="timeout" from="ShapeTimer" to="." method="_on_ShapeTimer_timeout"]
