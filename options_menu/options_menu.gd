@@ -11,14 +11,13 @@ func _ready():
 	add_to_group("menu")
 	$HBoxContainer/VBoxContainer/return_to_main_menu.hide()
 	emit_signal("menu_open")
+	var globals = get_node("/root/Globals")
+	$HBoxContainer/VBoxContainer/difficulty_slider.value = globals.CurrentDifficulty
 
 #menu exit
 #go back to main menu only if we are not in a game
 func _on_exit_button_pressed():
 	close(!isInGame)
-
-func set_ui_difficulty(difficulty):
-	$HBoxContainer/VBoxContainer/difficulty_slider.value = difficulty
 
 func mark_menu_as_game():
 	isInGame = true
@@ -44,4 +43,7 @@ func _go_to_main_menu():
 		print("There was a failure changing the scene")
 
 func _on_difficulty_slider_value_changed(value):
+	var globals = get_node("/root/Globals")
+	globals.CurrentDifficulty = int(value)
+
 	emit_signal("difficulty_changed", int(value))

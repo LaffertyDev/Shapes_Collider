@@ -3,7 +3,6 @@ extends Node2D
 # tetris generally has a 10x22 grid size
 export(int) var GridWidth = 10 # X
 export(int) var GridDepth = 22 # Y, bottom right = (9, 21)
-export(int) var CurrentDifficulty = 3
 var rng
 var current_shape;
 
@@ -22,7 +21,9 @@ func _ready():
 	for x in GridWidth:
 		shapes_grid[x] = []
 		shapes_grid[x].resize(GridDepth)
-	$ShapeTimer.wait_time = _difficulty_To_Timer(CurrentDifficulty)
+	var globals = get_node("/root/Globals")
+	_on_Difficulty_Change(globals.CurrentDifficulty)
+	$ShapeTimer.start()
 
 func _unhandled_input(event):
 	if !is_paused():
@@ -48,7 +49,6 @@ func _unhandled_input(event):
 			options_menu.connect("menu_open", self, "_handle_menu_open")
 			options_menu.connect("menu_closed", self, "_handle_menu_closed")
 			get_parent().add_child(options_menu);
-			options_menu.set_ui_difficulty(CurrentDifficulty)
 			options_menu.mark_menu_as_game()
 		else:
 			get_tree().call_group("menu", "close", false) # tell menu to close without going to main menu
@@ -76,7 +76,6 @@ func _difficulty_To_Timer(difficulty):
 			return 0.001
 
 func _on_Difficulty_Change(difficulty):
-	CurrentDifficulty = difficulty
 	$ShapeTimer.wait_time = _difficulty_To_Timer(difficulty)
 
 func _on_ShapeTimer_timeout():
