@@ -17,6 +17,9 @@ func _ready():
 func _on_exit_button_pressed():
 	close(!isInGame)
 
+func set_ui_difficulty(difficulty):
+	$HBoxContainer/VBoxContainer/difficulty_slider.value = difficulty
+
 func mark_menu_as_game():
 	isInGame = true
 	$HBoxContainer/VBoxContainer/return_to_main_menu.show()
