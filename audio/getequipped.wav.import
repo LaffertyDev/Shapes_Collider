@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/getequipped.wav-2dbfa53e834e1e0da9bd3d6a28ada25b.sample"
+path="res://.import/getequipped.wav-76c4ec0eb2f4c43f1eff07a563dc965c.sample"
 
 [deps]
 
-source_file="res://getequipped.wav"
-dest_files=[ "res://.import/getequipped.wav-2dbfa53e834e1e0da9bd3d6a28ada25b.sample" ]
+source_file="res://audio/getequipped.wav"
+dest_files=[ "res://.import/getequipped.wav-76c4ec0eb2f4c43f1eff07a563dc965c.sample" ]
 
 [params]
 

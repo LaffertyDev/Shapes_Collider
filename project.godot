@@ -27,7 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Globals="*res://globals.gd"
-GlobalAudio="*res://global_audio.tscn"
+GlobalAudio="*res://audio/global_audio.tscn"
 
 [display]
 

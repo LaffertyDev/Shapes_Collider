@@ -38,3 +38,6 @@ func set_sound_percentage(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sounds"),linear2db(SoundLoudness))
 	cfg.set_value("audio", "sound", SoundLoudness)
 	cfg.save("user://settings.cfg")
+	
+func play_piece():
+	$PiecePlayer.play()

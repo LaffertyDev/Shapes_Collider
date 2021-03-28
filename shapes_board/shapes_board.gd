@@ -79,6 +79,8 @@ func _on_Difficulty_Change(difficulty):
 
 func _on_ShapeTimer_timeout():
 	if !can_move_down(current_shape):
+		var global_audio = get_node("/root/GlobalAudio")
+		global_audio.play_piece()
 		current_shape.deactivate()
 		attempt_clear_rows()
 		var potential_shape = get_random_shape_option()
