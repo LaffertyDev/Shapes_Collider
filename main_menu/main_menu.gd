@@ -11,3 +11,8 @@ func _on_New_Game_pressed():
 
 func _on_Exit_pressed():
 	get_tree().quit()
+
+func _on_Options_pressed():
+	var err = get_tree().change_scene("res://options_menu/options_menu.tscn")
+	if err != OK:
+		print("There was a failure changing the scene")

@@ -22,19 +22,54 @@ func _ready():
 		shapes_grid[x] = []
 		shapes_grid[x].resize(GridDepth)
 
-func _input(event):
-	if event.is_action_pressed("ui_left"):
-		attempt_move_left(current_shape)
-	
-	if event.is_action_pressed("ui_right"):
-		attempt_move_right(current_shape)
+func _unhandled_input(event):
+	if !is_paused():
+		if event.is_action_pressed("ui_left"):
+			attempt_move_left(current_shape)
 		
-	if event.is_action_pressed("ui_down"):
-		attempt_move_down(current_shape)
+		if event.is_action_pressed("ui_right"):
+			attempt_move_right(current_shape)
+			
+		if event.is_action_pressed("ui_down"):
+			attempt_move_down(current_shape)
 
-	if event.is_action_pressed("ui_rotate"):
-		if current_shape.can_rotate_clockwise(shapes_grid):
-			current_shape.rotate_clockwise()
+		if event.is_action_pressed("ui_rotate"):
+			if current_shape.can_rotate_clockwise(shapes_grid):
+				current_shape.rotate_clockwise()
+
+	if event.is_action_pressed("ui_toggle_menu"):
+		if !is_paused():
+			print('group does not exist yet')
+			var options_res = load("res://options_menu/options_menu.tscn")
+			var options_menu = options_res.instance()
+			options_menu.connect("difficulty_changed", self, "_on_Difficulty_Change")
+			options_menu.connect("menu_open", self, "_handle_menu_open")
+			options_menu.connect("menu_closed", self, "_handle_menu_closed")
+			get_parent().add_child(options_menu);
+			options_menu.mark_menu_as_game()
+		else:
+			get_tree().call_group("menu", "close", false) # tell menu to close without going to main menu
+
+func _handle_menu_open():
+	$ShapeTimer.stop()
+
+func _handle_menu_closed():
+	$ShapeTimer.start()
+
+func _on_Difficulty_Change(difficulty):
+	match difficulty:
+		1:
+			$ShapeTimer.wait_time = 1.0
+		2:
+			$ShapeTimer.wait_time = 0.6
+		3:
+			$ShapeTimer.wait_time = 0.4
+		4:
+			$ShapeTimer.wait_time = 0.15
+		5:
+			$ShapeTimer.wait_time = 0.05
+		_:
+			print("Invalid Difficulty Option")
 
 func _on_ShapeTimer_timeout():
 	if !can_move_down(current_shape):
@@ -50,6 +85,9 @@ func _on_ShapeTimer_timeout():
 
 	else:
 		attempt_move_down(current_shape)
+
+func is_paused():
+	return get_tree().has_group("menu")
 
 func get_random_shape_option():
 	return rng.randi_range(0, Enums.ShapeOptions.size() - 1)
