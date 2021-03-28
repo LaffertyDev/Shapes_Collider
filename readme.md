@@ -1,6 +1,6 @@
 # Shapes Collider
 
-A simple geometric game where the player will collide shapes and fill up breaks.
+A simple geometric game where the player will collide shapes and fill up the board.
 
 ![Game Image](game_image_1.png?raw=true "Game Image")
 
