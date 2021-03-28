@@ -43,7 +43,6 @@ func _unhandled_input(event):
 
 	if event.is_action_pressed("ui_toggle_menu"):
 		if !is_paused():
-			print('group does not exist yet')
 			var options_res = load("res://options_menu/options_menu.tscn")
 			var options_menu = options_res.instance()
 			options_menu.connect("menu_open", self, "_handle_menu_open")

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/getequipped.wav-2dbfa53e834e1e0da9bd3d6a28ada25b.sample"
+
+[deps]
+
+source_file="res://getequipped.wav"
+dest_files=[ "res://.import/getequipped.wav-2dbfa53e834e1e0da9bd3d6a28ada25b.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

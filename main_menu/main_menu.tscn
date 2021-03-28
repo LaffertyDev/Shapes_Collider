@@ -19,9 +19,10 @@ __meta__ = {
 }
 
 [node name="VerticalBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 199.0
-margin_right = 281.0
+margin_left = 165.0
+margin_right = 315.0
 margin_bottom = 720.0
+rect_min_size = Vector2( 150, 0 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,7 +30,7 @@ __meta__ = {
 
 [node name="New Game" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
 margin_top = 326.0
-margin_right = 82.0
+margin_right = 150.0
 margin_bottom = 346.0
 text = "New Game"
 __meta__ = {
@@ -38,13 +39,13 @@ __meta__ = {
 
 [node name="Options" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
 margin_top = 350.0
-margin_right = 82.0
+margin_right = 150.0
 margin_bottom = 370.0
 text = "Options"
 
 [node name="Exit" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
 margin_top = 374.0
-margin_right = 82.0
+margin_right = 150.0
 margin_bottom = 394.0
 text = "Exit"
 [connection signal="pressed" from="HBoxContainer/VerticalBoxContainer/New Game" to="." method="_on_New_Game_pressed"]
