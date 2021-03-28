@@ -11,6 +11,7 @@ Because learning is fun!
 ## Features
 
 * Arrow keys (`W`, `A`, `S`, and `D`) will control the pieces
+* `R` will rotate a piece
 * Dynamic difficulty setting
 * User-settings persist
 * Basic audio
