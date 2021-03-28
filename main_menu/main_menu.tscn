@@ -28,30 +28,24 @@ __meta__ = {
 }
 
 [node name="New Game" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
-margin_top = 314.0
+margin_top = 326.0
 margin_right = 82.0
-margin_bottom = 334.0
+margin_bottom = 346.0
 text = "New Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Continue" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
-margin_top = 338.0
-margin_right = 82.0
-margin_bottom = 358.0
-text = "Continue"
-
 [node name="Options" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
-margin_top = 362.0
+margin_top = 350.0
 margin_right = 82.0
-margin_bottom = 382.0
+margin_bottom = 370.0
 text = "Options"
 
 [node name="Exit" type="Button" parent="HBoxContainer/VerticalBoxContainer"]
-margin_top = 386.0
+margin_top = 374.0
 margin_right = 82.0
-margin_bottom = 406.0
+margin_bottom = 394.0
 text = "Exit"
 [connection signal="pressed" from="HBoxContainer/VerticalBoxContainer/New Game" to="." method="_on_New_Game_pressed"]
 [connection signal="pressed" from="HBoxContainer/VerticalBoxContainer/Options" to="." method="_on_Options_pressed"]
