@@ -22,6 +22,7 @@ func _ready():
 		shapes_grid[x] = []
 		shapes_grid[x].resize(GridDepth)
 	var globals = get_node("/root/Globals")
+	globals.connect("difficulty_changed", self, "_on_Difficulty_Change")
 	_on_Difficulty_Change(globals.CurrentDifficulty)
 	$ShapeTimer.start()
 
@@ -45,7 +46,6 @@ func _unhandled_input(event):
 			print('group does not exist yet')
 			var options_res = load("res://options_menu/options_menu.tscn")
 			var options_menu = options_res.instance()
-			options_menu.connect("difficulty_changed", self, "_on_Difficulty_Change")
 			options_menu.connect("menu_open", self, "_handle_menu_open")
 			options_menu.connect("menu_closed", self, "_handle_menu_closed")
 			get_parent().add_child(options_menu);

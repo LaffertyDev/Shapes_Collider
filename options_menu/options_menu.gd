@@ -2,7 +2,6 @@ extends Control
 
 var isInGame = false
 
-signal difficulty_changed(difficulty)
 signal menu_open()
 signal menu_closed()
 
@@ -44,6 +43,4 @@ func _go_to_main_menu():
 
 func _on_difficulty_slider_value_changed(value):
 	var globals = get_node("/root/Globals")
-	globals.CurrentDifficulty = int(value)
-
-	emit_signal("difficulty_changed", int(value))
+	globals.set_difficulty(int(value))
